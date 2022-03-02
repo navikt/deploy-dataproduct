@@ -1,0 +1,22 @@
+syntax = "proto3";
+package io.nais.devrapid.github;
+
+import "google/protobuf/timestamp.proto";
+
+message Push {
+  string latestCommitSha = 1;
+  google.protobuf.Timestamp latestCommit = 2;
+  google.protobuf.Timestamp webHookRecieved = 3;
+  string ref = 4;
+  string masterBranch = 5;
+  string programmingLanguage = 6;
+  string repositoryName = 7;
+  bool privateRepo = 8;
+  string organizationName = 9;
+  int32 filesDeleted = 10;
+  int32 filesAdded = 11;
+  int32 filesModified = 12;
+  repeated string commitMessages = 13;
+  int32 coAuthors = 14;
+  google.protobuf.Timestamp firstBranchCommit = 15;
+}
