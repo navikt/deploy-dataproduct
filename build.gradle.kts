@@ -3,9 +3,9 @@ import com.google.protobuf.gradle.protobuf
 import com.google.protobuf.gradle.protoc
 
 plugins {
-    kotlin("jvm") version ("1.4.32")
-    kotlin("plugin.serialization") version "1.4.32"
-    id("com.google.protobuf") version "0.8.16"
+    kotlin("jvm") version ("1.6.10")
+    kotlin("plugin.serialization") version "1.6.10"
+    id("com.google.protobuf") version "0.8.18"
     application
 }
 
@@ -25,12 +25,12 @@ configurations {
     }
 }
 
-val junitVersion = "5.6.1"
-val ktorVersion = "1.3.2"
+val junitVersion = "5.8.2"
+val ktorVersion = "1.6.7"
 val log4jVersion = "2.17.0"
-val assertJVersion = "3.18.1"
-val prometheusVersion = "0.9.0"
-val micrometerVersion = "1.5.2"
+val assertJVersion = "3.22.0"
+val prometheusVersion = "0.15.0"
+val micrometerVersion = "1.8.2"
 val serializerVersion = "0.20.0"
 val protobufVersion = "3.19.4"
 
@@ -61,7 +61,7 @@ dependencies {
     implementation ("com.google.cloud:google-cloud-bigquery:1.127.11"){
         exclude(group="com.fasterxml.jackson.core", module = "jackson-core")
     }
-    compile("com.google.protobuf:protobuf-java:$protobufVersion")
+    api("com.google.protobuf:protobuf-java:$protobufVersion")
     protobuf(files("src/main/protobuf/"))
     testImplementation("org.assertj:assertj-core:$assertJVersion")
     testImplementation("org.junit.jupiter:junit-jupiter-api:$junitVersion")
