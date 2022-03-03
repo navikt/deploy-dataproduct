@@ -31,7 +31,6 @@ val log4jVersion = "2.17.0"
 val assertJVersion = "3.22.0"
 val prometheusVersion = "0.15.0"
 val micrometerVersion = "1.8.2"
-val serializerVersion = "0.20.0"
 val protobufVersion = "3.19.4"
 
 
@@ -46,9 +45,7 @@ dependencies {
     implementation("org.apache.logging.log4j:log4j-core:$log4jVersion")
     implementation("org.apache.logging.log4j:log4j-slf4j-impl:$log4jVersion")
     implementation("com.vlkan.log4j2:log4j2-logstash-layout-fatjar:0.19")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:$serializerVersion")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-common:$serializerVersion")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
     implementation("io.ktor:ktor-metrics-micrometer:$ktorVersion")
     implementation("io.prometheus:simpleclient:$prometheusVersion")
     implementation("io.micrometer:micrometer-registry-prometheus:$micrometerVersion")
