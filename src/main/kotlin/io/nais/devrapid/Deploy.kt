@@ -55,7 +55,7 @@ fun Application.deploy() {
     }
     val configuration = Configuration()
     launch {
-        LeadTimeKafkaConsumer(configuration).run()
+        DeployKafkaConsumer(configuration).run()
     }
 
 }

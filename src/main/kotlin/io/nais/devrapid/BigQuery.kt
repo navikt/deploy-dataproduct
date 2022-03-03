@@ -27,7 +27,7 @@ class BigQuery {
             .setProjectId(project)
             .build()
 
-    fun write(deployHistoryRow: DeployHistoryRow) {
+    fun write(deployHistoryRow: DeployRow) {
         val request = InsertAllRequest.newBuilder(TableId.of(dataset, table))
             .setIgnoreUnknownValues(true)
             .addRow(deployHistoryRow.asMap())
@@ -46,32 +46,39 @@ class BigQuery {
 }
 
 
-data class DeployHistoryRow(
-    val deploySha: String,
-    val repo: String,
-    val language: String,
+data class DeployRow(
+    val correlationId: String,
+    val platform: String,
+    val deploymentSystem: String,
+    val team: String,
+    val environment: String,
+    val namespace: String,
+    val cluster: String,
+    val application: String,
+    val version: String,
+    val containerImage: String,
     val deployTime: ZonedDateTime,
-    val pushTime: ZonedDateTime,
-    val firstCommitOnBranch: ZonedDateTime?
+    val gitCommitSha: String
 ) {
     private companion object {
-        private val log = LoggerFactory.getLogger(DeployHistoryRow::class.java)
+        private val log = LoggerFactory.getLogger(DeployRow::class.java)
     }
 
     fun asMap(): Map<String, String> {
         val map = mutableMapOf(
-            "deploySha" to deploySha,
-            "repo" to repo,
-            "language" to language,
+            "correlationId" to correlationId,
+            "platform" to platform,
+            "deploymentSystem" to deploymentSystem,
+            "team" to team,
+            "environment" to environment,
+            "namespace" to namespace,
+            "cluster" to cluster,
+            "application" to application,
+            "version" to version,
+            "containerImage" to containerImage,
             "deployTime" to deployTime.asTimeStamp(),
-            "pushTime" to pushTime.asTimeStamp(),
+            "gitCommitSha" to gitCommitSha,
         )
-
-        log.info("FirstCommitOnBranch:$firstCommitOnBranch")
-
-        if (firstCommitOnBranch != null) {
-            map["firstCommitOnBranch"] = firstCommitOnBranch.asTimeStamp()
-        }
 
         return map.toMap()
     }
