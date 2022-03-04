@@ -27,10 +27,10 @@ class BigQuery {
             .setProjectId(project)
             .build()
 
-    fun write(deployHistoryRow: DeployRow) {
+    fun write(deployHistoryRow: Map<String, String>) {
         val request = InsertAllRequest.newBuilder(TableId.of(dataset, table))
             .setIgnoreUnknownValues(true)
-            .addRow(deployHistoryRow.asMap())
+            .addRow(deployHistoryRow)
             .build()
 
         try {
@@ -42,46 +42,4 @@ class BigQuery {
             throw e
         }
     }
-
-}
-
-
-data class DeployRow(
-    val correlationId: String,
-    val platform: String,
-    val deploymentSystem: String,
-    val team: String,
-    val environment: String,
-    val namespace: String,
-    val cluster: String,
-    val application: String,
-    val version: String,
-    val containerImage: String,
-    val deployTime: ZonedDateTime,
-    val gitCommitSha: String
-) {
-    private companion object {
-        private val log = LoggerFactory.getLogger(DeployRow::class.java)
-    }
-
-    fun asMap(): Map<String, String> {
-        val map = mutableMapOf(
-            "correlationId" to correlationId,
-            "platform" to platform,
-            "deploymentSystem" to deploymentSystem,
-            "team" to team,
-            "environment" to environment,
-            "namespace" to namespace,
-            "cluster" to cluster,
-            "application" to application,
-            "version" to version,
-            "containerImage" to containerImage,
-            "deployTime" to deployTime.asTimeStamp(),
-            "gitCommitSha" to gitCommitSha,
-        )
-
-        return map.toMap()
-    }
-
-    private fun ZonedDateTime.asTimeStamp() = ISO_LOCAL_DATE_TIME.format(this.withZoneSameInstant(ZoneId.of("UTC")))
 }
