@@ -6,6 +6,7 @@ import com.natpryce.konfig.EnvironmentVariables
 import com.natpryce.konfig.Key
 import com.natpryce.konfig.overriding
 import com.natpryce.konfig.stringType
+import org.apache.kafka.clients.consumer.ConsumerConfig
 import java.util.*
 
 private fun config() =
@@ -23,7 +24,7 @@ fun setProps(): Properties {
     props["ssl.keystore.password"] = config()[Key("KAFKA_CREDSTORE_PASSWORD", stringType)]
     props["key.deserializer"] = "org.apache.kafka.common.serialization.StringDeserializer"
     props["value.deserializer"] = "org.apache.kafka.common.serialization.ByteArrayDeserializer"
-    props["group.id"] = "deploy-dataproduct"
+    props["group.id"] = "deploy-dataproduct-tmp"
     return props
 
 }
