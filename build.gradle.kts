@@ -55,7 +55,7 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.12.0")
     implementation("org.apache.kafka:kafka-clients:2.8.0")
     implementation("io.confluent:kafka-protobuf-serializer:6.1.1")
-    implementation ("com.google.cloud:google-cloud-bigquery:1.127.11"){
+    implementation ("com.google.cloud:google-cloud-bigquery:2.9.0"){
         exclude(group="com.fasterxml.jackson.core", module = "jackson-core")
     }
     api("com.google.protobuf:protobuf-java:$protobufVersion")
@@ -64,7 +64,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api:$junitVersion")
     testImplementation("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
     testImplementation("org.assertj:assertj-core:$assertJVersion")
-    testImplementation("io.ktor:ktor-server-test-host:1.5.2")
+    testImplementation("io.ktor:ktor-server-test-host:1.6.7")
 
 }
 java {

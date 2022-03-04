@@ -54,8 +54,10 @@ fun Application.deploy() {
         nais()
     }
     val configuration = Configuration()
+    val bq = BigQuery()
+    bq.createTable()
     launch {
-        DeployKafkaConsumer(configuration).run()
+        DeployKafkaConsumer(configuration, bq).run()
     }
 
 }

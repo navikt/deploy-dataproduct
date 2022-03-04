@@ -1,18 +1,12 @@
 package io.nais.devrapid
 
-import com.google.cloud.bigquery.BigQueryException
-import com.google.cloud.bigquery.BigQueryOptions
-import com.google.cloud.bigquery.InsertAllRequest
-import com.google.cloud.bigquery.TableId
+import com.google.cloud.bigquery.*
 import org.slf4j.LoggerFactory
-import java.time.ZoneId
-import java.time.ZonedDateTime
-import java.time.format.DateTimeFormatter.ISO_LOCAL_DATE_TIME
 
 
 class BigQuery {
-    private val table = "deploy_history"
-    private val dataset = "devrapid_leadtime"
+    private val table = "from_devrapid"
+    private val dataset = "deploys"
     private val project = "nais-analyse-prod-2dcc"
 
     private companion object {
@@ -41,5 +35,30 @@ class BigQuery {
             log.error(e.message)
             throw e
         }
+    }
+
+    fun createTable() {
+        val tableId = TableId.of(dataset, table)
+        if (bigquery.service.getTable(tableId) != null) {
+            log.info("Table $tableId already exists")
+            return
+        }
+        val schema = Schema.of(
+            Field.of("correlationId", StandardSQLTypeName.STRING),
+            Field.of("platform", StandardSQLTypeName.STRING),
+            Field.of("deploymentSystem", StandardSQLTypeName.STRING),
+            Field.newBuilder("team", StandardSQLTypeName.STRING).setMode(Field.Mode.NULLABLE).build(),
+            Field.of("environment", StandardSQLTypeName.STRING),
+            Field.newBuilder("namespace", StandardSQLTypeName.STRING).setMode(Field.Mode.NULLABLE).build(),
+            Field.newBuilder("cluster", StandardSQLTypeName.STRING).setMode(Field.Mode.NULLABLE).build(),
+            Field.newBuilder("application", StandardSQLTypeName.STRING).setMode(Field.Mode.NULLABLE).build(),
+            Field.of("version", StandardSQLTypeName.STRING),
+            Field.newBuilder("containerImage", StandardSQLTypeName.STRING).setMode(Field.Mode.NULLABLE).build(),
+            Field.of("deployTime", StandardSQLTypeName.TIMESTAMP),
+            Field.newBuilder("gitCommitSha", StandardSQLTypeName.STRING).setMode(Field.Mode.NULLABLE).build(),
+        )
+        val tableDefinition = StandardTableDefinition.of(schema)
+        val tableInfo = TableInfo.newBuilder(tableId, tableDefinition).build()
+        bigquery.service.create(tableInfo)
     }
 }

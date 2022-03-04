@@ -1,0 +1,44 @@
+name: "Build and deploy deploy-dataproduct"
+on:
+  push:
+    branches:
+      - "main"
+env:
+  "IMAGE": "docker.pkg.github.com/${{ github.repository }}/deploy-dataproduct:${{ github.sha}}"
+jobs:
+  build:
+    name: "build"
+    runs-on: "ubuntu-18.04"
+    steps:
+      - uses: "actions/checkout@v2"
+      - uses: "gradle/wrapper-validation-action@v1"
+      - uses: "actions/cache@v2"
+        with:
+          "path": "~/.gradle/caches"
+          "key": "${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle.kts') }}"
+          "restore-keys": "${{ runner.os }}-gradle-"
+      - uses: "actions/setup-java@v1"
+        with:
+          "java-version": "15"
+      - name: "compile and run tests"
+        run: "./gradlew build"
+      - name: "Build and publish Docker image"
+        run: "docker build --pull --tag ${IMAGE} . && echo $GITHUB_TOKEN | docker login\
+        \ --username $GITHUB_REPOSITORY --password-stdin https://docker.pkg.github.com\
+        \ && docker push ${IMAGE}"
+        env:
+          "GITHUB_TOKEN": "${{ secrets.GITHUB_TOKEN }}"
+  deployToProd:
+    name: "Deploy to prod"
+    needs:
+      - "build"
+    runs-on: "ubuntu-18.04"
+    steps:
+      - uses: "actions/checkout@v2"
+      - name: "Deploy to prod-gcp"
+        uses: "nais/deploy/actions/deploy@v1"
+        env:
+          "APIKEY": "${{ secrets.NAIS_DEPLOY_APIKEY }}"
+          "CLUSTER": "prod-gcp"
+          "RESOURCE": ".nais/nais.yaml"
+
