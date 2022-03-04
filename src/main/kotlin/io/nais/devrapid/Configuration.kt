@@ -24,6 +24,7 @@ fun setProps(): Properties {
     props["ssl.keystore.password"] = config()[Key("KAFKA_CREDSTORE_PASSWORD", stringType)]
     props["key.deserializer"] = "org.apache.kafka.common.serialization.StringDeserializer"
     props["value.deserializer"] = "org.apache.kafka.common.serialization.ByteArrayDeserializer"
+    props["auto.offset.reset"] = "earliest"
     props["group.id"] = "deploy-dataproduct-tmp"
     return props
 
