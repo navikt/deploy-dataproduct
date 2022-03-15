@@ -5,3 +5,6 @@
 # Ignore Gradle build output directory
 build
 scratch*
+
+# Ignore notebook stuff
+.ipynb_checkpoints
