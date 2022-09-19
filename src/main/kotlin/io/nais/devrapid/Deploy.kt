@@ -50,11 +50,11 @@ fun Application.deploy() {
             JvmThreadMetrics()
         )
     }
+    val bq = BigQuery()
     routing {
-        nais()
+        nais(bq)
     }
     val configuration = Configuration()
-    val bq = BigQuery()
     bq.createTable()
     launch {
         DeployKafkaConsumer(configuration, bq).run()

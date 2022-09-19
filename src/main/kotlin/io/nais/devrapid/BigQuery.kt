@@ -2,6 +2,7 @@ package io.nais.devrapid
 
 import com.google.cloud.bigquery.*
 import org.slf4j.LoggerFactory
+import java.util.*
 
 
 class BigQuery {
@@ -20,6 +21,33 @@ class BigQuery {
             .setLocation("europe-north1")
             .setProjectId(project)
             .build()
+
+    fun ping(): Boolean {
+        return try {
+            val queryConfig = QueryJobConfiguration.newBuilder(
+                "SELECT 0"
+            )
+                .setUseLegacySql(false)
+                .build()
+
+            val jobId = JobId.of(UUID.randomUUID().toString())
+            var queryJob: Job? = bigquery.service.create(JobInfo.newBuilder(queryConfig).setJobId(jobId).build())
+
+            queryJob = queryJob!!.waitFor()
+
+            if (queryJob == null) {
+                log.error("Job no longer exists")
+                return false
+            } else if (queryJob.status.error != null) {
+                log.error(queryJob.status.error.toString())
+                return false
+            }
+            true
+        } catch (e: BigQueryException) {
+            log.error(e.message)
+            false
+        }
+    }
 
     fun write(deployHistoryRow: Map<String, String>) {
         val request = InsertAllRequest.newBuilder(TableId.of(dataset, table))

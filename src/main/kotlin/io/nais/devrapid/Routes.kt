@@ -16,9 +16,14 @@ import kotlin.text.Charsets.UTF_8
 
 private val LOGGER = LoggerFactory.getLogger("deploy-dataproduct")
 
-fun Route.nais() {
+fun Route.nais(bigQuery: BigQuery) {
     get("/internal/isalive") {
-        call.respondText("UP")
+        if (bigQuery.ping()) {
+            call.respondText("UP")
+        } else {
+            call.respondText("BigQuery", status = HttpStatusCode.ServiceUnavailable)
+        }
+
     }
     get("/internal/isready") {
         call.respondText("UP")
