@@ -8,3 +8,7 @@ scratch*
 
 # Ignore notebook stuff
 .ipynb_checkpoints
+
+.DS_Store
+
+*.html
