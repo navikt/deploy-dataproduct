@@ -24,12 +24,13 @@ spec:
   prometheus:
     enabled: true
     path: "/internal/prometheus"
-  limits:
-    cpu: "400m"
-    memory: "256Mi"
-  requests:
-    cpu: "200m"
-    memory: "256Mi"
+  resources:
+    limits:
+      cpu: "400m"
+      memory: "256Mi"
+    requests:
+      cpu: "200m"
+      memory: "256Mi"
   kafka:
     pool: nav-infrastructure
   gcp:
