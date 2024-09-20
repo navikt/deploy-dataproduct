@@ -1,44 +1,40 @@
-name: "Build and deploy deploy-dataproduct"
+name: Build and deploy
 on:
   push:
     branches:
-      - "main"
-env:
-  "IMAGE": "docker.pkg.github.com/${{ github.repository }}/deploy-dataproduct:${{ github.sha}}"
+      - main
 jobs:
-  build:
-    name: "build"
-    runs-on: "ubuntu-18.04"
+  build_and_deploy:
+    name: Build, push and deploy
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
     steps:
-      - uses: "actions/checkout@v2"
-      - uses: "gradle/wrapper-validation-action@v1"
-      - uses: "actions/cache@v2"
+      - uses: actions/checkout@v4
+      - uses: gradle/actions/wrapper-validation
+      - uses: actions/cache@v4
         with:
-          "path": "~/.gradle/caches"
-          "key": "${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle.kts') }}"
-          "restore-keys": "${{ runner.os }}-gradle-"
-      - uses: "actions/setup-java@v1"
+          path: "~/.gradle/caches"
+          key: "${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle.kts') }}"
+          restore-keys: "${{ runner.os }}-gradle-"
+      - uses: actions/setup-java@v2
         with:
-          "java-version": "15"
-      - name: "compile and run tests"
+          java-version: "15"
+          distribution: "zulu"
+      - name: compile and run tests
         run: "./gradlew build"
-      - name: "Build and publish Docker image"
-        run: "docker build --pull --tag ${IMAGE} . && echo $GITHUB_TOKEN | docker login\
-        \ --username $GITHUB_REPOSITORY --password-stdin https://docker.pkg.github.com\
-        \ && docker push ${IMAGE}"
+      - name: Push docker image to GAR
+        uses: nais/docker-build-push@v0
+        id: docker-build-push
+        with:
+          team: nais-analyse
+          identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
+          project_id: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
+      - name: Deploy to prod-gcp
+        uses: nais/deploy/actions/deploy@v2
         env:
-          "GITHUB_TOKEN": "${{ secrets.GITHUB_TOKEN }}"
-  deployToProd:
-    name: "Deploy to prod"
-    needs:
-      - "build"
-    runs-on: "ubuntu-18.04"
-    steps:
-      - uses: "actions/checkout@v2"
-      - name: "Deploy to prod-gcp"
-        uses: "nais/deploy/actions/deploy@v1"
-        env:
-          "APIKEY": "${{ secrets.NAIS_DEPLOY_APIKEY }}"
-          "CLUSTER": "prod-gcp"
-          "RESOURCE": ".nais/nais.yaml"
-
+          CLUSTER: prod-gcp
+          RESOURCE: .nais/nais.yaml
+          VAR: image=${{ steps.docker-build-push.outputs.image }}
+          TELEMETRY: ${{ steps.docker-build-push.outputs.telemetry }}
