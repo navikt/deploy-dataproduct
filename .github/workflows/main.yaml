@@ -20,8 +20,8 @@ jobs:
           restore-keys: "${{ runner.os }}-gradle-"
       - uses: actions/setup-java@v2
         with:
-          java-version: "15"
-          distribution: "zulu"
+          java-version: "17"
+          distribution: "temurin"
       - name: compile and run tests
         run: "./gradlew build"
       - name: Push docker image to GAR
