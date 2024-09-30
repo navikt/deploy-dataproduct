@@ -1,4 +1,4 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import com.google.protobuf.gradle.*
 
 plugins {
@@ -70,13 +70,15 @@ java {
     targetCompatibility = JavaVersion.VERSION_17
 }
 
-tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "17"
+kotlin {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_17)
+    }
 }
 
 java {
     val mainJavaSourceSet: SourceDirectorySet = sourceSets.getByName("main").java
-    val protoSrcDir = "$buildDir/generated/source/proto/main"
+    val protoSrcDir = layout.buildDirectory.dir("generated/source/proto/main").get().asFile
     mainJavaSourceSet.srcDirs("$protoSrcDir/java", "$protoSrcDir/grpc", "$protoSrcDir/grpckotlin")
 }
 
@@ -116,7 +118,7 @@ tasks.named<Jar>("jar") {
 
     doLast {
         configurations.runtimeClasspath.get().forEach {
-            val file = File("$buildDir/libs/${it.name}")
+            val file = File("${layout.buildDirectory.get().asFile}/libs/${it.name}")
             if (!file.exists())
                 it.copyTo(file)
         }
