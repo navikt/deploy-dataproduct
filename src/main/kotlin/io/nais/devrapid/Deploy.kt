@@ -13,9 +13,10 @@ import io.micrometer.core.instrument.binder.jvm.JvmGcMetrics
 import io.micrometer.core.instrument.binder.jvm.JvmMemoryMetrics
 import io.micrometer.core.instrument.binder.jvm.JvmThreadMetrics
 import io.micrometer.core.instrument.binder.system.ProcessorMetrics
-import io.micrometer.prometheus.PrometheusConfig
-import io.micrometer.prometheus.PrometheusMeterRegistry
+import io.micrometer.prometheusmetrics.PrometheusConfig
+import io.micrometer.prometheusmetrics.PrometheusMeterRegistry
 import io.prometheus.client.CollectorRegistry
+import io.prometheus.metrics.model.registry.PrometheusRegistry
 import kotlinx.coroutines.launch
 import org.slf4j.LoggerFactory
 import org.slf4j.event.Level
@@ -39,7 +40,7 @@ fun Application.deploy() {
     install(MicrometerMetrics) {
         registry = PrometheusMeterRegistry(
             PrometheusConfig.DEFAULT,
-            CollectorRegistry.defaultRegistry,
+            PrometheusRegistry.defaultRegistry,
             Clock.SYSTEM
         )
         meterBinders = listOf(
