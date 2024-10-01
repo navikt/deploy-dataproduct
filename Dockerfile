@@ -1,6 +1,6 @@
 FROM eclipse-temurin:17-jdk
 
-COPY build/libs/app.jar app/app.jar
+COPY build/libs/*.jar /app/.
 
 ENV LOG_FORMAT="logstash"
 
@@ -11,7 +11,7 @@ RUN mkdir -p /app/.java/.systemPrefs && \
 ENV JAVA_OPTS="-XX:MaxRAMPercentage=75 \
                -XX:+HeapDumpOnOutOfMemoryError \
                -XX:HeapDumpPath=/oom-dump.hprof \
-               -Djava.util.prefs.systemRoot=/app/.java/.systemPrefs \
+               -Djava.util.prefs.systemRoot=/app/.java/ \
                -Djava.util.prefs.userRoot=/tmp/.java/.userPrefs"
 
 RUN mkdir -p /init-scripts
