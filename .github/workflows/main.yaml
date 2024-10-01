@@ -20,7 +20,7 @@ jobs:
           restore-keys: "${{ runner.os }}-gradle-"
       - uses: actions/setup-java@v2
         with:
-          java-version: "17"
+          java-version: "21"
           distribution: "temurin"
       - name: compile and run tests
         run: "./gradlew build"
