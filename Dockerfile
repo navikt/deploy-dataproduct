@@ -19,3 +19,9 @@ RUN mkdir -p /tmp/init-scripts && \
     echo 'java -XX:MaxRAMPercentage=75 -XX:+PrintFlagsFinal -version | grep -Ei "maxheapsize|maxram"' > /tmp/init-scripts/0-dump-memory-config.sh && \
     chmod +x /tmp/init-scripts/0-dump-memory-config.sh && \
     chown -R 1069:1069 /tmp/init-scripts
+
+# Set the working directory
+WORKDIR /app
+
+# Set the user to non-root with user and group ID 1069
+USER 1069:1069
