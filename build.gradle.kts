@@ -1,10 +1,11 @@
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import com.google.protobuf.gradle.*
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import com.google.protobuf.gradle.protobuf
+import com.google.protobuf.gradle.protoc
 
 plugins {
-    kotlin("jvm") version ("2.0.20")
-    kotlin("plugin.serialization") version "2.0.20"
-    id("com.google.protobuf") version "0.9.4"
+    kotlin("jvm") version ("1.6.10")
+    kotlin("plugin.serialization") version "1.6.10"
+    id("com.google.protobuf") version "0.8.18"
     application
 }
 
@@ -12,6 +13,7 @@ apply(plugin = "com.google.protobuf")
 
 
 repositories {
+    jcenter()
     maven("https://jitpack.io")
     maven("https://packages.confluent.io/maven/")
     mavenCentral()
@@ -23,37 +25,37 @@ configurations {
     }
 }
 
-val junitVersion = "5.11.1"
-val ktorVersion = "1.6.8"
-val log4jVersion = "2.24.0"
-val assertJVersion = "3.26.3"
-val prometheusVersion = "0.16.0"
-val micrometerVersion = "1.13.4"
-val protobufVersion = "4.28.2"
+val junitVersion = "5.8.2"
+val ktorVersion = "1.6.7"
+val log4jVersion = "2.17.0"
+val assertJVersion = "3.22.0"
+val prometheusVersion = "0.15.0"
+val micrometerVersion = "1.8.2"
+val protobufVersion = "3.19.4"
 
 
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-reflect:2.0.20")
+    implementation(kotlin("stdlib-jdk8"))
+    implementation("org.jetbrains.kotlin:kotlin-reflect:1.4.20")
     implementation("com.natpryce:konfig:1.6.10.0")
     implementation("io.ktor:ktor-server-netty:$ktorVersion")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.9.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.4.2")
     implementation("org.apache.logging.log4j:log4j-api:$log4jVersion")
     implementation("org.apache.logging.log4j:log4j-core:$log4jVersion")
     implementation("org.apache.logging.log4j:log4j-slf4j-impl:$log4jVersion")
-    implementation("com.vlkan.log4j2:log4j2-logstash-layout-fatjar:1.0.5")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
+    implementation("com.vlkan.log4j2:log4j2-logstash-layout-fatjar:0.19")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
     implementation("io.ktor:ktor-metrics-micrometer:$ktorVersion")
     implementation("io.prometheus:simpleclient:$prometheusVersion")
-    implementation("io.prometheus:simpleclient_common:$prometheusVersion")
     implementation("io.micrometer:micrometer-registry-prometheus:$micrometerVersion")
     implementation("io.ktor:ktor-auth:$ktorVersion")
     implementation("io.ktor:ktor-serialization:$ktorVersion")
-    implementation("commons-codec:commons-codec:1.17.1")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.18.0")
-    implementation("org.apache.kafka:kafka-clients:3.8.0")
-    implementation("io.confluent:kafka-protobuf-serializer:7.7.1")
-    implementation ("com.google.cloud:google-cloud-bigquery:2.42.3"){
+    implementation("commons-codec:commons-codec:1.15")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.12.0")
+    implementation("org.apache.kafka:kafka-clients:2.8.0")
+    implementation("io.confluent:kafka-protobuf-serializer:6.1.1")
+    implementation ("com.google.cloud:google-cloud-bigquery:2.9.0"){
         exclude(group="com.fasterxml.jackson.core", module = "jackson-core")
     }
     api("com.google.protobuf:protobuf-java:$protobufVersion")
@@ -66,19 +68,20 @@ dependencies {
 
 }
 java {
-    sourceCompatibility = JavaVersion.VERSION_21
-    targetCompatibility = JavaVersion.VERSION_21
+    sourceCompatibility = JavaVersion.VERSION_12
+    targetCompatibility = JavaVersion.VERSION_12
 }
 
-kotlin {
-    compilerOptions {
-        jvmTarget.set(JvmTarget.JVM_21)
-    }
+tasks.withType<KotlinCompile> {
+    kotlinOptions.jvmTarget = "12"
+    kotlinOptions.freeCompilerArgs += "-Xopt-in=kotlinx.serialization.UnstableDefault,io.ktor.util.KtorExperimentalAPI"
 }
+
+
 
 java {
     val mainJavaSourceSet: SourceDirectorySet = sourceSets.getByName("main").java
-    val protoSrcDir = layout.buildDirectory.dir("generated/source/proto/main").get().asFile
+    val protoSrcDir = "$buildDir/generated/source/proto/main"
     mainJavaSourceSet.srcDirs("$protoSrcDir/java", "$protoSrcDir/grpc", "$protoSrcDir/grpckotlin")
 }
 
@@ -118,7 +121,7 @@ tasks.named<Jar>("jar") {
 
     doLast {
         configurations.runtimeClasspath.get().forEach {
-            val file = File("${layout.buildDirectory.get().asFile}/libs/${it.name}")
+            val file = File("$buildDir/libs/${it.name}")
             if (!file.exists())
                 it.copyTo(file)
         }
