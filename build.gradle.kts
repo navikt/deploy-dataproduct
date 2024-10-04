@@ -24,7 +24,7 @@ configurations {
 }
 
 val junitVersion = "5.11.1"
-val ktorVersion = "1.6.8"
+val ktorVersion = "2.0.3"
 val log4jVersion = "2.24.0"
 val assertJVersion = "3.26.3"
 val prometheusVersion = "0.16.0"
@@ -34,37 +34,40 @@ val protobufVersion = "4.28.2"
 
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-reflect:2.0.20")
-    implementation("com.natpryce:konfig:1.6.10.0")
-    implementation("io.ktor:ktor-server-netty:$ktorVersion")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.9.0")
-    implementation("org.apache.logging.log4j:log4j-api:$log4jVersion")
-    implementation("org.apache.logging.log4j:log4j-core:$log4jVersion")
-    implementation("org.apache.logging.log4j:log4j-slf4j-impl:$log4jVersion")
-    implementation("org.slf4j:slf4j-simple:2.0.16")
-    implementation("com.vlkan.log4j2:log4j2-logstash-layout-fatjar:1.0.5")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
-    implementation("io.ktor:ktor-metrics-micrometer:$ktorVersion")
-    implementation("io.prometheus:simpleclient:$prometheusVersion")
-    implementation("io.prometheus:simpleclient_common:$prometheusVersion")
-    implementation("io.micrometer:micrometer-registry-prometheus:$micrometerVersion")
-    implementation("io.ktor:ktor-auth:$ktorVersion")
-    implementation("io.ktor:ktor-serialization:$ktorVersion")
-    implementation("commons-codec:commons-codec:1.17.1")
+    api("com.google.protobuf:protobuf-java:$protobufVersion")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.18.0")
-    implementation("org.apache.kafka:kafka-clients:3.8.0")
-    implementation("io.confluent:kafka-protobuf-serializer:7.7.1")
     implementation ("com.google.cloud:google-cloud-bigquery:2.42.3"){
         exclude(group="com.fasterxml.jackson.core", module = "jackson-core")
     }
-    api("com.google.protobuf:protobuf-java:$protobufVersion")
+    implementation("com.natpryce:konfig:1.6.10.0")
+    implementation("com.vlkan.log4j2:log4j2-logstash-layout-fatjar:1.0.5")
+    implementation("commons-codec:commons-codec:1.17.1")
+    implementation("io.confluent:kafka-protobuf-serializer:7.7.1")
+    implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
+    implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
+    implementation("io.ktor:ktor-server-auth:$ktorVersion")
+    implementation("io.ktor:ktor-server-call-logging:$ktorVersion")
+    implementation("io.ktor:ktor-server-content-negotiation:$ktorVersion")
+    implementation("io.ktor:ktor-server-default-headers:$ktorVersion")
+    implementation("io.ktor:ktor-server-metrics-micrometer:$ktorVersion")
+    implementation("io.ktor:ktor-server-netty:$ktorVersion")
+    implementation("io.micrometer:micrometer-registry-prometheus:$micrometerVersion")
+    implementation("io.prometheus:simpleclient_common:$prometheusVersion")
+    implementation("io.prometheus:simpleclient:$prometheusVersion")
+    implementation("org.apache.kafka:kafka-clients:3.8.0")
+    implementation("org.apache.logging.log4j:log4j-api:$log4jVersion")
+    implementation("org.apache.logging.log4j:log4j-core:$log4jVersion")
+    implementation("org.apache.logging.log4j:log4j-slf4j-impl:$log4jVersion")
+    implementation("org.jetbrains.kotlin:kotlin-reflect:2.0.20")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.9.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
+    implementation("org.slf4j:slf4j-simple:2.0.16")
     protobuf(files("src/main/protobuf/"))
+    testImplementation("io.ktor:ktor-server-test-host:1.6.7")
+    testImplementation("org.assertj:assertj-core:$assertJVersion")
     testImplementation("org.assertj:assertj-core:$assertJVersion")
     testImplementation("org.junit.jupiter:junit-jupiter-api:$junitVersion")
     testImplementation("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
-    testImplementation("org.assertj:assertj-core:$assertJVersion")
-    testImplementation("io.ktor:ktor-server-test-host:1.6.7")
-
 }
 java {
     sourceCompatibility = JavaVersion.VERSION_21

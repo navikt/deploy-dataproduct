@@ -1,12 +1,14 @@
 package io.nais.devrapid
 
-import io.ktor.application.*
-import io.ktor.features.*
 import io.ktor.http.*
-import io.ktor.metrics.micrometer.*
-import io.ktor.request.*
-import io.ktor.routing.*
-import io.ktor.serialization.*
+import io.ktor.serialization.kotlinx.json.*
+import io.ktor.server.application.*
+import io.ktor.server.metrics.micrometer.*
+import io.ktor.server.plugins.callloging.*
+import io.ktor.server.plugins.defaultheaders.*
+import io.ktor.server.plugins.contentnegotiation.*
+import io.ktor.server.request.*
+import io.ktor.server.routing.*
 import io.micrometer.core.instrument.Clock
 import io.micrometer.core.instrument.binder.jvm.ClassLoaderMetrics
 import io.micrometer.core.instrument.binder.jvm.JvmGcMetrics
@@ -33,9 +35,7 @@ fun Application.deploy() {
     }
     install(DefaultHeaders)
     install(ContentNegotiation) {
-        json(
-            contentType = ContentType.Application.Json
-        )
+        json()
     }
     install(MicrometerMetrics) {
         registry = PrometheusMeterRegistry(
@@ -60,5 +60,4 @@ fun Application.deploy() {
     launch {
         DeployKafkaConsumer(configuration, bq).run()
     }
-
 }
