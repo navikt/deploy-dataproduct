@@ -36,7 +36,7 @@ val protobufVersion = "4.28.2"
 dependencies {
     api("com.google.protobuf:protobuf-java:$protobufVersion")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.18.0")
-    implementation ("com.google.cloud:google-cloud-bigquery:2.42.3")
+    implementation("com.google.cloud:google-cloud-bigquery:2.42.3")
     implementation("com.natpryce:konfig:1.6.10.0")
     implementation("commons-codec:commons-codec:1.17.1")
     implementation("io.confluent:kafka-protobuf-serializer:7.7.1")
@@ -54,6 +54,7 @@ dependencies {
     implementation("org.apache.kafka:kafka-clients:3.8.0")
     implementation("org.apache.logging.log4j:log4j-api:$log4jVersion")
     implementation("org.apache.logging.log4j:log4j-core:$log4jVersion")
+    implementation("org.apache.logging.log4j:log4j-layout-template-json:$log4jVersion")
     implementation("org.apache.logging.log4j:log4j-slf4j-impl:$log4jVersion")
     implementation("org.jetbrains.kotlin:kotlin-reflect:2.0.20")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.9.0")
