@@ -63,7 +63,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
     implementation("org.slf4j:slf4j-simple:2.0.16")
     protobuf(files("src/main/protobuf/"))
-    testImplementation("io.ktor:ktor-server-test-host:1.6.7")
+    testImplementation("io.ktor:ktor-server-test-host:$ktorVersion")
     testImplementation("org.assertj:assertj-core:$assertJVersion")
     testImplementation("org.assertj:assertj-core:$assertJVersion")
     testImplementation("org.junit.jupiter:junit-jupiter-api:$junitVersion")
