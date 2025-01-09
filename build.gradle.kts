@@ -51,7 +51,7 @@ dependencies {
     implementation("io.micrometer:micrometer-registry-prometheus:$micrometerVersion")
     implementation("io.prometheus:simpleclient_common:$prometheusVersion")
     implementation("io.prometheus:simpleclient:$prometheusVersion")
-    implementation("org.apache.kafka:kafka-clients:3.8.0")
+    implementation("org.apache.kafka:kafka-clients:7.8.0-ce")
     implementation("org.apache.logging.log4j:log4j-api:$log4jVersion")
     implementation("org.apache.logging.log4j:log4j-core:$log4jVersion")
     implementation("org.apache.logging.log4j:log4j-layout-template-json:$log4jVersion")
