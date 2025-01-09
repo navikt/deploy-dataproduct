@@ -24,7 +24,7 @@ configurations {
 }
 
 val junitVersion = "5.11.1"
-val ktorVersion = "2.3.12"
+val ktorVersion = "2.3.13"
 val log4jVersion = "2.24.0"
 val assertJVersion = "3.26.3"
 val prometheusVersion = "0.16.0"
@@ -36,10 +36,10 @@ val protobufVersion = "4.28.2"
 dependencies {
     api("com.google.protobuf:protobuf-java:$protobufVersion")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.18.0")
-    implementation("com.google.cloud:google-cloud-bigquery:2.42.3")
+    implementation("com.google.cloud:google-cloud-bigquery:2.45.0")
     implementation("com.natpryce:konfig:1.6.10.0")
     implementation("commons-codec:commons-codec:1.17.1")
-    implementation("io.confluent:kafka-protobuf-serializer:7.7.1")
+    implementation("io.confluent:kafka-protobuf-serializer:7.8.0")
     implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
     implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
     implementation("io.ktor:ktor-server-auth:$ktorVersion")
