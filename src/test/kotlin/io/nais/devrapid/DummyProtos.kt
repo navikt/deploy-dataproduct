@@ -2,7 +2,6 @@ package io.nais.devrapid
 
 import com.google.protobuf.AbstractMessage
 import com.google.protobuf.Any
-import com.google.protobuf.GeneratedMessageV3
 import com.google.protobuf.Timestamp
 import io.nais.devrapid.github.Message
 import no.nav.protos.deployment.DeploymentEvent
