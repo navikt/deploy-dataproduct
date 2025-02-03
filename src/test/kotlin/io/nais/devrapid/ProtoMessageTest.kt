@@ -5,8 +5,8 @@ import no.nav.protos.deployment.DeploymentEvent
 import org.junit.jupiter.api.Test
 import com.google.protobuf.Any
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.Assert.assertFalse
-import org.junit.Assert.assertTrue
+import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertTrue
 
 class ProtoMessageTest{
     @Test
