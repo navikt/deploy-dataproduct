@@ -24,7 +24,7 @@ configurations {
 }
 
 val junitVersion = "5.11.1"
-val ktorVersion = "2.3.13"
+val ktorVersion = "3.0.3"
 val log4jVersion = "2.24.3"
 val assertJVersion = "3.26.3"
 val prometheusVersion = "0.16.0"
