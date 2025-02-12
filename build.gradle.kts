@@ -28,7 +28,7 @@ val ktorVersion = "3.0.3"
 val log4jVersion = "2.24.3"
 val assertJVersion = "3.27.3"
 val prometheusVersion = "0.16.0"
-val micrometerVersion = "1.13.4"
+val micrometerVersion = "1.14.4"
 val protobufVersion = "4.29.3"
 
 
