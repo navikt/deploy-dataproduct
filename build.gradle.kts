@@ -23,7 +23,7 @@ configurations {
     }
 }
 
-val junitVersion = "5.11.4"
+val junitVersion = "5.12.1"
 val ktorVersion = "3.1.1"
 val log4jVersion = "2.24.3"
 val assertJVersion = "3.27.3"
