@@ -23,8 +23,8 @@ configurations {
     }
 }
 
-val junitVersion = "5.12.1"
 val ktorVersion = "3.1.3"
+val junitVersion = "5.12.2"
 val log4jVersion = "2.24.3"
 val assertJVersion = "3.27.3"
 val prometheusVersion = "0.16.0"
@@ -57,7 +57,7 @@ dependencies {
     implementation("org.apache.logging.log4j:log4j-layout-template-json:$log4jVersion")
     implementation("org.apache.logging.log4j:log4j-slf4j2-impl:$log4jVersion")
     implementation("org.jetbrains.kotlin:kotlin-reflect:2.1.20")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.10.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.10.2")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.8.1")
     protobuf(files("src/main/protobuf/"))
     testImplementation("io.ktor:ktor-server-test-host:$ktorVersion")
