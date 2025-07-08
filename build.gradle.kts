@@ -59,9 +59,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect:2.1.20")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.10.2")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.8.1")
-    protobuf(files("src/main/protobuf/"))
     testImplementation("io.ktor:ktor-server-test-host:$ktorVersion")
-    testImplementation("org.assertj:assertj-core:$assertJVersion")
     testImplementation("org.assertj:assertj-core:$assertJVersion")
     testImplementation("org.junit.jupiter:junit-jupiter-api:$junitVersion")
     testImplementation("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
@@ -78,22 +76,16 @@ kotlin {
     }
 }
 
-java {
-    val mainJavaSourceSet: SourceDirectorySet = sourceSets.getByName("main").java
-    val protoSrcDir = layout.buildDirectory.dir("generated/source/proto/main").get().asFile
-    mainJavaSourceSet.srcDirs("$protoSrcDir/java", "$protoSrcDir/grpc", "$protoSrcDir/grpckotlin")
-}
-
 protobuf {
     protoc {
         artifact = "com.google.protobuf:protoc:$protobufVersion"
     }
 }
 
-sourceSets{
-    create("proto"){
+sourceSets {
+    main {
         proto {
-            srcDir("src/main/protobuf/")
+            srcDir("src/main/protobuf")
         }
     }
 }
