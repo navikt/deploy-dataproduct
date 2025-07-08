@@ -39,7 +39,7 @@ dependencies {
     implementation("com.google.cloud:google-cloud-bigquery:2.52.0")
     implementation("com.natpryce:konfig:1.6.10.0")
     implementation("commons-codec:commons-codec:1.18.0")
-    implementation("io.confluent:kafka-protobuf-serializer:7.9.0")
+    implementation("io.confluent:kafka-protobuf-serializer:7.9.2")
     implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
     implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
     implementation("io.ktor:ktor-server-auth:$ktorVersion")
