@@ -29,7 +29,7 @@ val log4jVersion = "2.24.3"
 val assertJVersion = "3.27.3"
 val prometheusVersion = "0.16.0"
 val micrometerVersion = "1.14.6"
-val protobufVersion = "4.30.2"
+val protobufVersion = "4.31.1"
 
 
 
