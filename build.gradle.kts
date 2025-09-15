@@ -36,7 +36,7 @@ val protobufVersion = "4.30.2"
 dependencies {
     api("com.google.protobuf:protobuf-java:$protobufVersion")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.19.1")
-    implementation("com.google.cloud:google-cloud-bigquery:2.52.0")
+    implementation("com.google.cloud:google-cloud-bigquery:2.55.0")
     implementation("com.natpryce:konfig:1.6.10.0")
     implementation("commons-codec:commons-codec:1.18.0")
     implementation("io.confluent:kafka-protobuf-serializer:7.9.2")
