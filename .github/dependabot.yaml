@@ -2,6 +2,10 @@ version: 2
 updates:
   - package-ecosystem: "gradle"
     directory: "/"
+    groups:
+      gradle:
+        patterns:
+          - "*"
     schedule:
       interval: "weekly"
   - package-ecosystem: "docker"
