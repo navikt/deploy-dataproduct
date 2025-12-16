@@ -13,7 +13,7 @@ spec:
       cpu: "200m"
       memory: "256Mi"
   envFrom:
-    secret: dataproduct-deploy
+    - secret: dataproduct-deploy
   gcp:
     bigQueryDatasets:
       - name: deploys
