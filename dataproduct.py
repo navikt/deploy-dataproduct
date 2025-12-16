@@ -10,6 +10,9 @@ def main():
     nais_api_key = os.getenv("NAIS_API_TOKEN")
     if not nais_api_key:
         raise ValueError("NAIS_API_TOKEN environment variable is not set")
+    dry_run = os.getenv("DRY_RUN", "false").lower() == "true"
+    if dry_run:
+        print("Dry run mode enabled. No data will be pushed to BigQuery.")
 
     bq_client = BigQueryClient(project="nais-analyse-prod-2dcc")
 
@@ -27,7 +30,7 @@ def main():
         print("No new deployments to push to BigQuery.")
         return
 
-    bq_client.push_rows(deployments)
+    bq_client.push_rows(deployments, dry_run=dry_run)
     print("Data pushed to BigQuery successfully.")
 
 

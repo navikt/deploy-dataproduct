@@ -26,7 +26,11 @@ class BigQueryClient:
             return row.deployTime.isoformat()
         return None
 
-    def push_rows(self, rows):
+    def push_rows(self, rows, dry_run=False):
+        if dry_run:
+            print(f"Dry run enabled. Would push {len(rows)} rows to BigQuery.")
+            return
+
         dataset_id = 'deploys'
         table_id = 'from_devrapid'
 
