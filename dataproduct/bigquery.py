@@ -1,4 +1,5 @@
 from google.cloud import bigquery
+from google.cloud.bigquery import DatasetReference, TableReference
 
 # Define your query
 LATEST_DEPLOY_QUERY = """
@@ -31,59 +32,49 @@ class BigQueryClient:
             print(f"Dry run enabled. Would push {len(rows)} rows to BigQuery.")
             return
 
-        dataset_id = 'deploys'
-        table_id = 'from_devrapid'
-
-        table_ref = self.client.dataset(dataset_id).table(table_id)
-        table = self.client.get_table(table_ref)
-
-        errors = self.client.insert_rows(table, rows)
+        errors = self.client.insert_rows(self.table, rows)
         if errors:
             print("Errors occurred while inserting rows: ", errors)
         else:
-            print(f"Successfully inserted {len(rows)} rows into {table_id}.")
+            print(
+                f"Successfully inserted {len(rows)} rows into {self.table_id}.")
 
     def _ensure_table(self):
-        dataset_ref = self.client.dataset(self.dataset_id)
-        table_ref = dataset_ref.table(self.table_id)
+        dataset_ref = bigquery.DatasetReference(self.project, self.dataset_id)
+        table_ref = bigquery.TableReference(dataset_ref, self.table_id)
 
-        try:
-            table = self.client.get_table(table_ref)
-            return table
-        except Exception:
-            schema = [
-                bigquery.SchemaField(
-                    name="platform", field_type="STRING", mode="NULLABLE"),
-                bigquery.SchemaField(
-                    name="deploymentSystem", field_type="STRING", mode="NULLABLE"),
-                bigquery.SchemaField(
-                    name="team", field_type="STRING", mode="NULLABLE"),
-                bigquery.SchemaField(name="environment",
-                                     field_type="STRING", mode="NULLABLE"),
-                bigquery.SchemaField(
-                    name="namespace", field_type="STRING", mode="NULLABLE"),
-                bigquery.SchemaField(
-                    name="cluster", field_type="STRING", mode="NULLABLE"),
-                bigquery.SchemaField(
-                    name="deployTime", field_type="TIMESTAMP", mode="NULLABLE"),
-                bigquery.SchemaField(name="gitCommitSha",
-                                     field_type="STRING", mode="NULLABLE"),
-                bigquery.SchemaField(name="resourceName",
-                                     field_type="STRING", mode="NULLABLE"),
-                bigquery.SchemaField(name="resourceKind",
-                                     field_type="STRING", mode="NULLABLE"),
+        schema = [
+            bigquery.SchemaField(
+                name="platform", field_type="STRING", mode="NULLABLE"),
+            bigquery.SchemaField(
+                name="deploymentSystem", field_type="STRING", mode="NULLABLE"),
+            bigquery.SchemaField(
+                name="team", field_type="STRING", mode="NULLABLE"),
+            bigquery.SchemaField(name="environment",
+                                 field_type="STRING", mode="NULLABLE"),
+            bigquery.SchemaField(
+                name="namespace", field_type="STRING", mode="NULLABLE"),
+            bigquery.SchemaField(
+                name="cluster", field_type="STRING", mode="NULLABLE"),
+            bigquery.SchemaField(
+                name="deployTime", field_type="TIMESTAMP", mode="NULLABLE"),
+            bigquery.SchemaField(name="gitCommitSha",
+                                 field_type="STRING", mode="NULLABLE"),
+            bigquery.SchemaField(name="resourceName",
+                                 field_type="STRING", mode="NULLABLE"),
+            bigquery.SchemaField(name="resourceKind",
+                                 field_type="STRING", mode="NULLABLE"),
 
-                # Unused fields, but kept for history
-                bigquery.SchemaField(name="correlationId",
-                                     field_type="STRING", mode="NULLABLE"),
-                bigquery.SchemaField(name="application",
-                                     field_type="STRING", mode="NULLABLE"),
-                bigquery.SchemaField(
-                    name="version", field_type="STRING", mode="NULLABLE"),
-                bigquery.SchemaField(name="containerImage",
-                                     field_type="STRING", mode="NULLABLE"),
-            ]
+            # Unused fields, but kept for history
+            bigquery.SchemaField(name="correlationId",
+                                 field_type="STRING", mode="NULLABLE"),
+            bigquery.SchemaField(name="application",
+                                 field_type="STRING", mode="NULLABLE"),
+            bigquery.SchemaField(
+                name="version", field_type="STRING", mode="NULLABLE"),
+            bigquery.SchemaField(name="containerImage",
+                                 field_type="STRING", mode="NULLABLE"),
+        ]
 
-            table = bigquery.Table(table_ref, schema=schema)
-            table = self.client.create_table(table)
-            return table
+        return self.client.create_table(bigquery.Table(
+            table_ref, schema=schema), exists_ok=True)
