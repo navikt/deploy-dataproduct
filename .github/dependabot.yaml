@@ -1,18 +1,32 @@
 version: 2
 updates:
-  - package-ecosystem: "gradle"
-    directory: "/"
-    groups:
-      gradle:
-        patterns:
-          - "*"
-    schedule:
-      interval: "weekly"
   - package-ecosystem: "docker"
     directory: "/"
+    cooldown:
+      default-days: 7
     schedule:
       interval: "weekly"
+    groups:
+      docker:
+        patterns:
+          - "*"
   - package-ecosystem: "github-actions"
     directory: "/"
+    cooldown:
+      default-days: 7
     schedule:
       interval: "weekly"
+    groups:
+      gh:
+        patterns:
+          - "*"
+  - package-ecosystem: "pip"
+    directory: "/"
+    cooldown:
+      default-days: 7
+    schedule:
+      interval: "weekly"
+    groups:
+      pip:
+        patterns:
+          - "*"
