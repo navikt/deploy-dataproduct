@@ -3,6 +3,10 @@ import requests
 
 DEPLOYMENTS_QUERY = """query GetDeployments($filters: DeploymentFilter, $after: Cursor) {
   deployments (filter: $filters, after: $after) {
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
     nodes {
       createdAt
       environmentName
