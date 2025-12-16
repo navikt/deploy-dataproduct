@@ -13,8 +13,9 @@ spec:
       cpu: "200m"
       memory: "256Mi"
   accessPolicy:
-    external:
-      - host: console.nav.cloud.nais.io
+    outbound:
+      external:
+        - host: console.nav.cloud.nais.io
   envFrom:
     - secret: dataproduct-deploy
   gcp:
