@@ -21,6 +21,7 @@ WORKDIR /linky
 ENV PYTHONUNBUFFERED=1
 ENV PATH="/venv/bin:$PATH"
 
+COPY schema.json .
 COPY dataproduct.py .
 COPY dataproduct/ ./dataproduct/
 COPY --from=builder /app/.venv /venv
