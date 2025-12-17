@@ -14,7 +14,7 @@ def main():
     if dry_run:
         print("Dry run mode enabled. No data will be pushed to BigQuery.")
 
-    bq_client = BigQueryClient(project="nais-analyse-prod-2dcc")
+    bq_client = BigQueryClient()
 
     latest_deploy = bq_client.get_latest_deploy()
     if latest_deploy is None:

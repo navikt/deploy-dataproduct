@@ -13,8 +13,8 @@ LATEST_DEPLOY_QUERY = """
 
 
 class BigQueryClient:
-    def __init__(self, project):
-        self.project = project
+    def __init__(self):
+        self.project = 'nais-analyse-prod-2dcc'
         self.dataset_id = 'deploys'
         self.table_id = 'from_devrapid'
 
