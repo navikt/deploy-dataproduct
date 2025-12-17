@@ -1,5 +1,6 @@
 from google.cloud import bigquery
 from google.cloud.bigquery import DatasetReference, TableReference
+import json
 
 # Define your query
 LATEST_DEPLOY_QUERY = """
@@ -43,38 +44,8 @@ class BigQueryClient:
         dataset_ref = bigquery.DatasetReference(self.project, self.dataset_id)
         table_ref = bigquery.TableReference(dataset_ref, self.table_id)
 
-        schema = [
-            bigquery.SchemaField(
-                name="platform", field_type="STRING", mode="NULLABLE"),
-            bigquery.SchemaField(
-                name="deploymentSystem", field_type="STRING", mode="NULLABLE"),
-            bigquery.SchemaField(
-                name="team", field_type="STRING", mode="NULLABLE"),
-            bigquery.SchemaField(name="environment",
-                                 field_type="STRING", mode="NULLABLE"),
-            bigquery.SchemaField(
-                name="namespace", field_type="STRING", mode="NULLABLE"),
-            bigquery.SchemaField(
-                name="cluster", field_type="STRING", mode="NULLABLE"),
-            bigquery.SchemaField(
-                name="deployTime", field_type="TIMESTAMP", mode="NULLABLE"),
-            bigquery.SchemaField(name="gitCommitSha",
-                                 field_type="STRING", mode="NULLABLE"),
-            bigquery.SchemaField(name="resourceName",
-                                 field_type="STRING", mode="NULLABLE"),
-            bigquery.SchemaField(name="resourceKind",
-                                 field_type="STRING", mode="NULLABLE"),
-
-            # Unused fields, but kept for history
-            bigquery.SchemaField(name="correlationId",
-                                 field_type="STRING", mode="NULLABLE"),
-            bigquery.SchemaField(name="application",
-                                 field_type="STRING", mode="NULLABLE"),
-            bigquery.SchemaField(
-                name="version", field_type="STRING", mode="NULLABLE"),
-            bigquery.SchemaField(name="containerImage",
-                                 field_type="STRING", mode="NULLABLE"),
-        ]
+        with open('schema.json', 'r') as f:
+            schema = json.load(f)
 
         return self.client.create_table(bigquery.Table(
             table_ref, schema=schema), exists_ok=True)

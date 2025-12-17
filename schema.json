@@ -1,0 +1,72 @@
+[
+  {
+    "name": "platform",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "deploymentSystem",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "team",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "environment",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "namespace",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "cluster",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "deployTime",
+    "type": "TIMESTAMP",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "gitCommitSha",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "resourceName",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "resourceKind",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "correlationId",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "application",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "version",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "containerImage",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  }
+]
