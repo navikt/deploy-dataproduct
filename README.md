@@ -1,5 +1,7 @@
 # Dataprodukt for Nais-deployments
 
+> Python jobb som henter deployments fra Nais API og putter de i BigQuery.
+
 ``` shell
 gcloud auth login --update-adc
 uv run python dataproduct.py
