@@ -1,4 +1,4 @@
-# Dataprodukt for deployments
+# Dataprodukt for Nais-deployments
 
 ``` shell
 gcloud auth login --update-adc
