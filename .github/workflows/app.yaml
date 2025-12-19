@@ -1,4 +1,4 @@
-name: Build and deploy
+name: Deploy app
 on:
   push:
     branches:
@@ -18,7 +18,7 @@ jobs:
         id: changed-files
         uses: "nais/what-changed@main"
         with:
-          files: .nais/app.yaml,.nais/job.yaml
+          files: .nais/app.yaml
       - name: Build and push image and SBOM to OCI registry
         if: steps.changed-files.outputs.changed != 'only-inputs'
         uses: nais/docker-build-push@v0
@@ -29,5 +29,5 @@ jobs:
         uses: nais/deploy/actions/deploy@v2
         env:
           CLUSTER: prod-gcp
-          RESOURCE: .nais/app.yaml,.nais/job.yaml
+          RESOURCE: .nais/app.yaml
           WORKLOAD_IMAGE: ${{ steps.docker-build-push.outputs.image }}
