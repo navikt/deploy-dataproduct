@@ -10,7 +10,6 @@ spec:
     - "/linky/dataproduct.py"
   resources:
     limits:
-      cpu: "400m"
       memory: "256Mi"
     requests:
       cpu: "200m"
