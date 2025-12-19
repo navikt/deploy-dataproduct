@@ -23,7 +23,6 @@ ENV PATH="/venv/bin:$PATH"
 
 COPY schema.json .
 COPY dataproduct.py .
+COPY forwarder.py .
 COPY dataproduct/ ./dataproduct/
 COPY --from=builder /app/.venv /venv
-
-ENTRYPOINT [ "python", "/linky/dataproduct.py" ]

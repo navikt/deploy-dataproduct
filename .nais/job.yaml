@@ -5,6 +5,9 @@ metadata:
   namespace: nais-analyse
 spec:
   schedule: "55 * * * *"
+  command:
+    - "python"
+    - "/linky/dataproduct.py"
   resources:
     limits:
       cpu: "400m"

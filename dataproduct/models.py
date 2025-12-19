@@ -8,16 +8,16 @@ class Resource:
 
     def to_dict(self, deployment):
         return {
-            "platform": deployment.platform,
-            "deploymentSystem": deployment.deploymentSystem,
-            "team": deployment.team,
-            "environment": deployment.environment,
-            "namespace": deployment.namespace,
             "cluster": deployment.cluster,
             "deployTime": deployment.deployTime,
+            "deploymentSystem": deployment.deploymentSystem,
+            "environment": deployment.environment,
             "gitCommitSha": deployment.gitCommitSha,
+            "namespace": deployment.namespace,
+            "platform": deployment.platform,
+            "resourceKind": self.kind,
             "resourceName": self.name,
-            "resourceKind": self.kind
+            "team": deployment.team,
         }
 
     def __str__(self):

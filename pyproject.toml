@@ -5,6 +5,7 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.14"
 dependencies = [
+    "flask>=3.1.2",
     "google-cloud-bigquery>=3.38.0",
     "load-dotenv>=0.1.0",
 ]

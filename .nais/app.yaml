@@ -1,0 +1,27 @@
+apiVersion: nais.io/v1alpha1
+kind: Application
+metadata:
+  name: deploy-forwarder
+  namespace: nais-analyse
+spec:
+  command:
+    - "flask"
+    - "run"
+    - "--app"
+    - "forwarder"
+  resources:
+    limits:
+      cpu: "400m"
+      memory: "256Mi"
+    requests:
+      cpu: "200m"
+      memory: "256Mi"
+  accessPolicy:
+    inbound:
+      rules:
+        - application: vera
+          namespace: team-atom
+  gcp:
+    bigQueryDatasets:
+      - name: deploys
+        permission: READWRITE
