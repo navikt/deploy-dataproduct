@@ -7,6 +7,13 @@ gcloud auth login --update-adc
 uv run python dataproduct.py
 ```
 
+> Python app som forwarder deployments fra Vera til BigQuery.
+
+``` shell
+gcloud auth login --update-adc
+uv run gunicorn forwarder:app
+```
+
 ## Endring av BigQuery schema
 
 1. Endre i filen `schema.json`
