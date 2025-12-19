@@ -11,6 +11,7 @@ if dry_run:
 
 bq_client = BigQueryClient()
 
+app = Flask(__name__)
 
 @app.route('/api/deployment', methods=['POST'])
 def deployment():
@@ -32,4 +33,4 @@ def deployment():
 
 
 if __name__ == "__main__":
-    app = Flask(__name__)
+    app.run()

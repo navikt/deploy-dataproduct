@@ -1,11 +1,12 @@
 [project]
-name = "python-edition"
-version = "0.1.0"
-description = "Add your description here"
+name = "deploy-dataproduct"
+version = "1.0.0"
+description = "Catch all the deployments"
 readme = "README.md"
 requires-python = ">=3.14"
 dependencies = [
     "flask>=3.1.2",
     "google-cloud-bigquery>=3.38.0",
+    "gunicorn>=23.0.0",
     "load-dotenv>=0.1.0",
 ]

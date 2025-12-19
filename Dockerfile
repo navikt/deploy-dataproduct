@@ -16,13 +16,13 @@ RUN uv sync
 
 FROM cgr.dev/chainguard/python:latest
 
-WORKDIR /linky
+WORKDIR /app
 
 ENV PYTHONUNBUFFERED=1
-ENV PATH="/venv/bin:$PATH"
+ENV PATH="/app/.venv/bin:$PATH"
 
 COPY schema.json .
 COPY dataproduct.py .
 COPY forwarder.py .
-COPY dataproduct/ ./dataproduct/
-COPY --from=builder /app/.venv /venv
+COPY dataproduct/ ./dataproduct
+COPY --from=builder /app/.venv /app/.venv

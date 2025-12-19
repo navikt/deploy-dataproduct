@@ -5,8 +5,8 @@ metadata:
   namespace: nais-analyse
 spec:
   command:
-    - "python"
-    - "/linky/forwarder.py"
+    - "gunicorn"
+    - "forwarder:app"
   port: 8000
   resources:
     limits:
