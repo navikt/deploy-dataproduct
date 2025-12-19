@@ -5,10 +5,9 @@ metadata:
   namespace: nais-analyse
 spec:
   command:
-    - "flask"
-    - "run"
-    - "--app"
-    - "forwarder"
+    - "python"
+    - "/linky/forwarder.py"
+  port: 8000
   resources:
     limits:
       memory: "256Mi"
