@@ -7,7 +7,7 @@ spec:
   schedule: "55 * * * *"
   command:
     - "python"
-    - "/linky/dataproduct.py"
+    - "/app/dataproduct.py"
   resources:
     limits:
       memory: "256Mi"
