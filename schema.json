@@ -30,13 +30,18 @@
     "mode": "NULLABLE"
   },
   {
-    "name": "deployTime",
-    "type": "TIMESTAMP",
+    "name": "application",
+    "type": "STRING",
     "mode": "NULLABLE"
   },
   {
-    "name": "gitCommitSha",
+    "name": "version",
     "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "deployTime",
+    "type": "TIMESTAMP",
     "mode": "NULLABLE"
   },
   {
@@ -49,24 +54,4 @@
     "type": "STRING",
     "mode": "NULLABLE"
   },
-  {
-    "name": "correlationId",
-    "type": "STRING",
-    "mode": "NULLABLE"
-  },
-  {
-    "name": "application",
-    "type": "STRING",
-    "mode": "NULLABLE"
-  },
-  {
-    "name": "version",
-    "type": "STRING",
-    "mode": "NULLABLE"
-  },
-  {
-    "name": "containerImage",
-    "type": "STRING",
-    "mode": "NULLABLE"
-  }
 ]
