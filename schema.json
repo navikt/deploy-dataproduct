@@ -53,5 +53,5 @@
     "name": "resourceKind",
     "type": "STRING",
     "mode": "NULLABLE"
-  },
+  }
 ]
