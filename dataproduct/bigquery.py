@@ -5,7 +5,8 @@ import json
 LATEST_DEPLOY_QUERY = """
     SELECT *
     FROM `nais-analyse-prod-2dcc.deploys.from_devrapid`
-    WHERE deployTime >= TIMESTAMP_SUB(CURRENT_TIMESTAMP(), INTERVAL 7 DAY)
+    WHERE deployTime >= TIMESTAMP_SUB(CURRENT_TIMESTAMP(), INTERVAL 30 DAY)
+    AND deploymentSystem = 'Nais API'
     ORDER BY deployTime DESC
     LIMIT 1
 """
