@@ -1,4 +1,5 @@
 from google.cloud import bigquery
+from itertools import islice
 import json
 
 # Define your query
@@ -33,11 +34,17 @@ class BigQueryClient:
             print(f"Dry run enabled. Would push {len(rows)} rows to BigQuery.")
             return
 
-        errors = self.client.insert_rows(self.table, rows)
-        if errors:
-            print("Errors occurred while inserting rows: ", errors)
-        else:
-            print(f"Successfully inserted {len(rows)} rows into {self.table_id}.")
+        total = 0
+        for batch in self.chunked(rows):
+            errors = self.client.insert_rows(self.table, batch)
+            if errors:
+                raise RuntimeError(
+                    f"Errors inserting batch starting at {total}: {errors}"
+                )
+            total += len(batch)
+            print(f"Successfully inserted {total} rows into {self.table_id}.")
+
+        print(f"Successfully inserted {total} rows into {self.table_id}.")
 
     def _ensure_table(self):
         dataset_ref = bigquery.DatasetReference(self.project, self.dataset_id)
@@ -49,3 +56,11 @@ class BigQueryClient:
         return self.client.create_table(
             bigquery.Table(table_ref, schema=schema), exists_ok=True
         )
+
+    def chunked(iterable, size=10_000):
+        it = iter(iterable)
+        while True:
+            chunk = list(islice(it, size))
+            if not chunk:
+                return
+            yield chunk
