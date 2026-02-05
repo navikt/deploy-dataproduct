@@ -57,7 +57,7 @@ class BigQueryClient:
             bigquery.Table(table_ref, schema=schema), exists_ok=True
         )
 
-    def chunked(iterable, size=10_000):
+    def chunked(self, iterable, size=10_000):
         it = iter(iterable)
         while True:
             chunk = list(islice(it, size))
