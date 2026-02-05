@@ -14,9 +14,9 @@ LATEST_DEPLOY_QUERY = """
 
 class BigQueryClient:
     def __init__(self):
-        self.project = 'nais-analyse-prod-2dcc'
-        self.dataset_id = 'deploys'
-        self.table_id = 'from_devrapid'
+        self.project = "nais-analyse-prod-2dcc"
+        self.dataset_id = "deploys"
+        self.table_id = "from_devrapid"
 
         self.client = bigquery.Client(project=self.project)
         self.table = self._ensure_table()
@@ -37,15 +37,15 @@ class BigQueryClient:
         if errors:
             print("Errors occurred while inserting rows: ", errors)
         else:
-            print(
-                f"Successfully inserted {len(rows)} rows into {self.table_id}.")
+            print(f"Successfully inserted {len(rows)} rows into {self.table_id}.")
 
     def _ensure_table(self):
         dataset_ref = bigquery.DatasetReference(self.project, self.dataset_id)
         table_ref = bigquery.TableReference(dataset_ref, self.table_id)
 
-        with open('schema.json', 'r') as f:
+        with open("schema.json", "r") as f:
             schema = json.load(f)
 
-        return self.client.create_table(bigquery.Table(
-            table_ref, schema=schema), exists_ok=True)
+        return self.client.create_table(
+            bigquery.Table(table_ref, schema=schema), exists_ok=True
+        )
