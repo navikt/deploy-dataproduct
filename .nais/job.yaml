@@ -18,8 +18,6 @@ spec:
     outbound:
       external:
         - host: console.nav.cloud.nais.io
-  envFrom:
-    - secret: dataproduct-deploy
   gcp:
     bigQueryDatasets:
       - name: deploys

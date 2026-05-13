@@ -7,7 +7,7 @@ load_dotenv()
 
 
 def main():
-    nais_api_key = os.getenv("NAIS_API_TOKEN")
+    nais_api_key = open(os.getenv("NAIS_SERVICE_ACCOUNT_TOKEN_PATH"), "r").read()
     if not nais_api_key:
         raise ValueError("NAIS_API_TOKEN environment variable is not set")
     dry_run = os.getenv("DRY_RUN", "false").lower() == "true"
